@@ -31,7 +31,7 @@ export class EarningService extends EarningData {
         up: true,
         value: 4,
       },
-      dailyIncome: 45895,
+      dailyIncome: 4595,
     },
     tether: {
       liveChart: [],

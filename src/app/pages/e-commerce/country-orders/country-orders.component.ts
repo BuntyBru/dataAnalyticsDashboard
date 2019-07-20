@@ -7,17 +7,17 @@ import { CountryOrderData } from '../../../@core/data/country-order';
   selector: 'ngx-country-orders',
   styleUrls: ['./country-orders.component.scss'],
   template: `
-    <nb-card [size]="breakpoint.width >= breakpoints.md ? 'medium' : 'giant'">
-      <nb-card-header>Country Orders Statistics</nb-card-header>
+    <nb-card [size]="breakpoint.width >= breakpoints.md ? 'large' : 'giant'">
+      <nb-card-header>Sales Revenue By Country</nb-card-header>
       <nb-card-body>
         <ngx-country-orders-map (select)="selectCountryById($event)"
                                 countryId="USA">
         </ngx-country-orders-map>
-        <ngx-country-orders-chart [countryName]="countryName"
+       <!--<ngx-country-orders-chart [countryName]="countryName"
                                   [data]="countryData"
                                   [labels]="countriesCategories"
                                   maxValue="20">
-        </ngx-country-orders-chart>
+        </ngx-country-orders-chart>-->
       </nb-card-body>
     </nb-card>
   `,

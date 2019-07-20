@@ -7,6 +7,8 @@ import { NbThemeService } from '@nebular/theme';
 import { combineLatest } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
+import {DataService} from '../../data.service';
+
 
 @Component({
   selector: 'ngx-country-orders-map',
@@ -37,10 +39,11 @@ export class CountryOrdersMapComponent implements OnDestroy {
       new L.LatLng(89.99346179538875, 180),
     ),
     maxBoundsViscosity: 1.0,
+    
   };
 
   constructor(private ecMapService: CountryOrdersMapService,
-              private theme: NbThemeService) {
+              private theme: NbThemeService, private backService :DataService) {
 
     combineLatest([
       this.ecMapService.getCords(),
@@ -84,6 +87,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
     layer.on({
       mouseover: (e) => this.highlightFeature(e.target),
       mouseout: (e) => this.moveout(e.target),
+      //the below works only when you click on a specific country
       click: (e) => this.selectFeature(e.target),
     });
   }
@@ -103,6 +107,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
   }
 
   private moveout(featureLayer) {
+    
     if (featureLayer !== this.selectedCountry) {
       this.resetHighlight(featureLayer);
 
@@ -119,7 +124,19 @@ export class CountryOrdersMapComponent implements OnDestroy {
     }
   }
 
+  //function which finds out the country clicked on map
   private selectFeature(featureLayer) {
+    console.log(featureLayer);
+    console.log("this is the selected country", featureLayer.feature.id);
+
+    for(let i=0;i<this.backService.countryListing.length;i++)
+    {
+      if(featureLayer.feature.id === this.backService.countryListing[i].alpha3code)
+      {
+        this.backService.aboveListing = this.backService.countryListing[i];
+      }
+    }
+    console.log("this is the above listing variable", this.backService.aboveListing);
     if (featureLayer !== this.selectedCountry) {
       this.resetHighlight(this.selectedCountry);
       this.highlightFeature(featureLayer);

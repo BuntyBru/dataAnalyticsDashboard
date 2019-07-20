@@ -3,6 +3,7 @@ import { NbThemeService } from '@nebular/theme';
 import { interval , Subscription } from 'rxjs';
 import { switchMap, takeWhile } from 'rxjs/operators';
 import { LiveUpdateChart, EarningData } from '../../../../@core/data/earning';
+import {DataService} from '../../data.service';
 
 @Component({
   selector: 'ngx-earning-card-front',
@@ -13,7 +14,7 @@ export class EarningCardFrontComponent implements OnDestroy, OnInit {
   private alive = true;
 
   @Input() selectedCurrency: string = 'Bitcoin';
-
+  @Input() name: any;
   intervalSubscription: Subscription;
   currencies: string[] = ['Bitcoin', 'Tether', 'Ethereum'];
   currentTheme: string;
@@ -21,7 +22,7 @@ export class EarningCardFrontComponent implements OnDestroy, OnInit {
   liveUpdateChartData: { value: [string, number] }[];
 
   constructor(private themeService: NbThemeService,
-              private earningService: EarningData) {
+              private earningService: EarningData, private backService:DataService) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
@@ -30,7 +31,7 @@ export class EarningCardFrontComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.getEarningCardData(this.selectedCurrency);
+    this.getEarningCardData(this.selectedCurrency);//selected month
   }
 
   changeCurrency(currency) {

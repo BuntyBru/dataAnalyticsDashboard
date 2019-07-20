@@ -9,6 +9,7 @@ export class CountryOrdersMapService {
   constructor(private http: HttpClient) {}
 
   getCords(): Observable<any> {
+    //console.log("This was used");
     return this.http.get('assets/leaflet-countries/countries.geo.json');
   }
 

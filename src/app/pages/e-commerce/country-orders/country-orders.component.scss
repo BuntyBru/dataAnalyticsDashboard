@@ -9,7 +9,9 @@
     height: 100%;
     padding: 0;
   }
-
+  ngx-country-orders-map{
+    flex: 1;
+  }
   @include media-breakpoint-down(sm) {
     nb-card-body {
       flex-direction: column;

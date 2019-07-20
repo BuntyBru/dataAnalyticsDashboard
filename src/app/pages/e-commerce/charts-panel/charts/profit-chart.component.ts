@@ -103,7 +103,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
         },
       ],
       series: [
-        {
+        /*{
           name: 'Canceled',
           type: 'bar',
           barGap: 0,
@@ -137,7 +137,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
             },
           },
           data: this.profitChartData.data[1],
-        },
+        },*/
         {
           name: 'All orders',
           type: 'bar',
