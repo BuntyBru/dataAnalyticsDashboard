@@ -12,7 +12,7 @@
     <div class="delta"
          [class.up]="backService.aboveListing[name.id+'_per'] > 0"
          [class.down]="backService.aboveListing[name.id+'_per'] < 0">
-      <nb-icon [icon]="earningLiveUpdateCardData.delta.up ? 'arrow-up' : 'arrow-down'"
+      <nb-icon [icon]="backService.aboveListing[name.id+'_per'] > 0 ? 'arrow-up' : 'arrow-down'"
                pack="eva"
                class="direction">
       </nb-icon>
