@@ -6,7 +6,8 @@ import { ProfitChartComponent } from './charts/profit-chart.component';
 import { OrdersChart } from '../../../@core/data/orders-chart';
 import { ProfitChart } from '../../../@core/data/profit-chart';
 import { OrderProfitChartSummary, OrdersProfitChartData } from '../../../@core/data/orders-profit-chart';
-
+import {DataService} from '../data.service';
+import { from } from 'rxjs';
 @Component({
   selector: 'ngx-ecommerce-charts',
   styleUrls: ['./charts-panel.component.scss'],
@@ -17,14 +18,14 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
   private alive = true;
 
   chartPanelSummary: OrderProfitChartSummary[];
-  period: string = 'week';
+  period: string = this.backService.monthChosenForGraph;
   ordersChartData: OrdersChart;
-  profitChartData: ProfitChart;
+  profitChartData: any;
 
   @ViewChild('ordersChart', { static: true }) ordersChart: OrdersChartComponent;
   @ViewChild('profitChart', { static: true }) profitChart: ProfitChartComponent;
 
-  constructor(private ordersProfitChartService: OrdersProfitChartData) {
+  constructor(private ordersProfitChartService: OrdersProfitChartData, private backService: DataService) {
     this.ordersProfitChartService.getOrderProfitChartSummary()
       .pipe(takeWhile(() => this.alive))
       .subscribe((summary) => {
@@ -40,7 +41,9 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
       this.period = value;
     }
 
-    this.getOrdersChartData(value);
+    console.log("this is the period which has been selected", this.period);
+    this.backService.monthChosenForGraph=this.period;
+    //this.getOrdersChartData(value);
     this.getProfitChartData(value);
   }
 
@@ -61,11 +64,14 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
   }
 
   getProfitChartData(period: string) {
-    this.ordersProfitChartService.getProfitChartData(period)
+    /*this.ordersProfitChartService.getProfitChartData(period)
       .pipe(takeWhile(() => this.alive))
       .subscribe(profitChartData => {
         this.profitChartData = profitChartData;
-      });
+      });*/
+
+      this.profitChartData = this.backService.barGraphData[period];
+
   }
 
   ngOnDestroy() {

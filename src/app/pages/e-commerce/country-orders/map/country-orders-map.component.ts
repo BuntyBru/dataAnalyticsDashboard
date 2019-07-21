@@ -135,7 +135,7 @@ export class CountryOrdersMapComponent implements OnDestroy {
       {
         this.backService.aboveListing = this.backService.countryListing[i];
         this.backService.current_country = this.backService.countryListing[i].alpha3code;
-        
+        this.backService.current_countryName=this.backService.countryListing[i].name;
         console.log("THe itemNo for this country is", i)
       }
     }

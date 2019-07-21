@@ -4,6 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 
 import { ProfitChart } from '../../../../@core/data/profit-chart';
 import { LayoutService } from '../../../../@core/utils/layout.service';
+import {DataService} from '../../data.service'
 
 @Component({
   selector: 'ngx-profit-chart',
@@ -15,7 +16,7 @@ import { LayoutService } from '../../../../@core/utils/layout.service';
 export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input()
-  profitChartData: ProfitChart;
+  profitChartData: any;
 
   private alive = true;
 
@@ -23,7 +24,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
   options: any = {};
 
   constructor(private theme: NbThemeService,
-              private layoutService: LayoutService) {
+              private layoutService: LayoutService, private backService:DataService) {
     this.layoutService.onChangeLayoutSize()
       .pipe(
         takeWhile(() => this.alive),
@@ -42,7 +43,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
       .pipe(takeWhile(() => this.alive))
       .subscribe(config => {
         const eTheme: any = config.variables.profit;
-
+console.log("themes in the bar graph");
         this.setOptions(eTheme);
       });
   }
@@ -102,8 +103,93 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
           },
         },
       ],
-      series: [
-        /*{
+      series:{
+          name: 'All orders',
+          type: 'bar',
+          barWidth: '60%',
+          itemStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: eTheme.secondLineGradFrom,
+              }, {
+                offset: 1,
+                color: eTheme.thirdLineGradTo,
+              }]),
+            },
+          },
+          data: this.profitChartData.data,
+        },
+      
+    };
+  }
+
+
+  //Function for updating the chart
+  updateProfitChartOptions(profitChartData: ProfitChart) {
+    const options = this.options;
+   // const series = this.getNewSeries(options.series, profitChartData.data);
+
+   console.log("the month chosen for display is ",this.backService.monthChosenForGraph);
+   this.profitChartData = this.backService.barGraphData[this.backService.monthChosenForGraph];
+
+   for(let k=0;k<this.profitChartData.data.length;k++)
+   {
+     if(this.profitChartData.data[k] < 0)
+     {
+       console.log("negativve number");
+       
+     }
+   }
+
+    this.echartsIntance.setOption({
+      xAxis: {
+        data: this.profitChartData.chartLabel,
+      },
+      series: 
+        {
+          name: 'All orders',
+          type: 'bar',
+          barWidth: '60%',
+          data: this.profitChartData.data,
+        },
+      
+      
+    });
+  }
+
+  getNewSeries(series, data: number[][]) {
+    return series.map((line, index) => {
+      return {
+        ...line,
+        data: data[index],
+      };
+    });
+  }
+
+  onChartInit(echarts) {
+    this.echartsIntance = echarts;
+  }
+
+  resizeChart() {
+    if (this.echartsIntance) {
+      // Fix recalculation chart size
+      // TODO: investigate more deeply
+      setTimeout(() => {
+        this.echartsIntance.resize();
+      }, 0);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.alive = false;
+  }
+}
+
+
+
+
+ /*{
           name: 'Canceled',
           type: 'bar',
           barGap: 0,
@@ -138,63 +224,3 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
           },
           data: this.profitChartData.data[1],
         },*/
-        {
-          name: 'All orders',
-          type: 'bar',
-          barWidth: '20%',
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: eTheme.thirdLineGradFrom,
-              }, {
-                offset: 1,
-                color: eTheme.thirdLineGradTo,
-              }]),
-            },
-          },
-          data: this.profitChartData.data[2],
-        },
-      ],
-    };
-  }
-
-  updateProfitChartOptions(profitChartData: ProfitChart) {
-    const options = this.options;
-    const series = this.getNewSeries(options.series, profitChartData.data);
-
-    this.echartsIntance.setOption({
-      series: series,
-      xAxis: {
-        data: this.profitChartData.chartLabel,
-      },
-    });
-  }
-
-  getNewSeries(series, data: number[][]) {
-    return series.map((line, index) => {
-      return {
-        ...line,
-        data: data[index],
-      };
-    });
-  }
-
-  onChartInit(echarts) {
-    this.echartsIntance = echarts;
-  }
-
-  resizeChart() {
-    if (this.echartsIntance) {
-      // Fix recalculation chart size
-      // TODO: investigate more deeply
-      setTimeout(() => {
-        this.echartsIntance.resize();
-      }, 0);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.alive = false;
-  }
-}

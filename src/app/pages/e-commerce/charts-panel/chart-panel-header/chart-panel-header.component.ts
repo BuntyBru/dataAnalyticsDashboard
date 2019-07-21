@@ -14,10 +14,12 @@ export class ChartPanelHeaderComponent implements OnDestroy {
 
   @Output() periodChange = new EventEmitter<string>();
 
-  @Input() type: string = 'week';
+  @Input() type: string = 'All';
 
-  types: string[] = ['week', 'month', 'year'];
-  chartLegend: {iconColor: string; title: string}[];
+ // types: string[] = ['week', 'month', 'year'];
+ types: string[] = ['All','Jan', 'Feb', 'Mar', 'Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+  
+ chartLegend: {iconColor: string; title: string}[];
   breakpoint: NbMediaBreakpoint = { name: '', width: 0 };
   breakpoints: any;
   currentTheme: string;

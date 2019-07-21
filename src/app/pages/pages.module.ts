@@ -6,6 +6,7 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 
 
+
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -15,6 +16,7 @@ import { PagesRoutingModule } from './pages-routing.module';
   ],
   declarations: [
     PagesComponent,
+    
   ],
 })
 export class PagesModule {

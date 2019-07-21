@@ -2,13 +2,14 @@ import { Component, OnDestroy } from '@angular/core';
 import { NbMediaBreakpoint, NbMediaBreakpointsService, NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { CountryOrderData } from '../../../@core/data/country-order';
+import { DataService} from '../data.service';
 
 @Component({
   selector: 'ngx-country-orders',
   styleUrls: ['./country-orders.component.scss'],
   template: `
     <nb-card [size]="breakpoint.width >= breakpoints.md ? 'large' : 'giant'">
-      <nb-card-header>Sales Revenue By Country</nb-card-header>
+      <nb-card-header>Sales Revenue By Country ({{backService.current_countryName}}) </nb-card-header>
       <nb-card-body>
         <ngx-country-orders-map (select)="selectCountryById($event)"
                                 countryId="USA">
@@ -34,7 +35,8 @@ export class CountryOrdersComponent implements OnDestroy {
 
   constructor(private themeService: NbThemeService,
               private breakpointService: NbMediaBreakpointsService,
-              private countryOrderService: CountryOrderData) {
+              private countryOrderService: CountryOrderData,
+              private backService:DataService) {
     this.breakpoints = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(takeWhile(() => this.alive))
