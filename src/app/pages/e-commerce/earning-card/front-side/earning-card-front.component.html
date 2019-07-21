@@ -8,6 +8,7 @@
    
    <!-- <div class="h6">{{ earningLiveUpdateCardData.dailyIncome | ngxNumberWithCommas }}</div>-->
    <div class="h6">{{ backService.aboveListing[name.id] | ngxNumberWithCommas }}</div> 
+   
    <div> {{name.name | ngxCapitalize}}</div>
     <div class="delta"
          [class.up]="backService.aboveListing[name.id+'_per'] > 0"
@@ -27,7 +28,7 @@
   </ngx-earning-live-update-chart>-->
 </nb-card-body>
 <nb-card-footer>
-    <nb-select [selected]="selectedCurrency" (selectedChange)="changeCurrency($event)">
+    <nb-select [selected]="backService.selectedMonth[name.id]" (selectedChange)="changeCurrency($event,name.id)">
         <nb-option *ngFor="let currency of currencies" [value]="currency">{{ currency }}</nb-option>
       </nb-select>
   </nb-card-footer>

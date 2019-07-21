@@ -13,13 +13,17 @@ import {DataService} from '../../data.service';
 export class EarningCardFrontComponent implements OnDestroy, OnInit {
   private alive = true;
 
-  @Input() selectedCurrency: string = 'Bitcoin';
+  @Input() selectedCurrency: string = 'All';
   @Input() name: any;
   intervalSubscription: Subscription;
-  currencies: string[] = ['Bitcoin', 'Tether', 'Ethereum'];
+  currencies: string[] = ['All', 'Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
   currentTheme: string;
   earningLiveUpdateCardData: LiveUpdateChart;
   liveUpdateChartData: { value: [string, number] }[];
+
+  selectedMonth={
+    'total_profit':'All'
+  }
 
   constructor(private themeService: NbThemeService,
               private earningService: EarningData, private backService:DataService) {
@@ -34,11 +38,36 @@ export class EarningCardFrontComponent implements OnDestroy, OnInit {
     this.getEarningCardData(this.selectedCurrency);//selected month
   }
 
-  changeCurrency(currency) {
-    if (this.selectedCurrency !== currency) {
+  changeCurrency(currency, identity) {
+  /*  if (this.selectedCurrency !== currency) {
       this.selectedCurrency = currency;
 
       this.getEarningCardData(this.selectedCurrency);
+    }*/
+    //this.backService.selectedMonth = currency;
+    this.backService.selectedMonth[identity] = currency;
+    console.log("change in currency", currency,identity, this.backService.current_country);
+    
+    console.log("this is the new data", this.backService.monthly_data['any_key'][currency]);
+    if(currency === 'All')
+    {
+      for(let i=0;i<this.backService.countryListingMain.length;i++)
+      {
+        if(this.backService.current_country == this.backService.countryListingMain[i].alpha3code)
+        {
+          console.log(this.backService.countryListingMain[i]);
+          console.log("yeaaah Allit is");
+          this.backService.aboveListing[identity]=this.backService.countryListingMain[i][identity];
+          this.backService.aboveListing[identity+'_per']=this.backService.countryListingMain[i][identity+'_per'];
+        }
+      }
+
+    }
+    else
+    {
+
+    this.backService.aboveListing[identity] = this.backService.monthly_data['any_key'][currency][identity];
+    this.backService.aboveListing[identity+'_per'] = this.backService.monthly_data['any_key'][currency][identity+'_per'];
     }
   }
 

@@ -134,8 +134,20 @@ export class CountryOrdersMapComponent implements OnDestroy {
       if(featureLayer.feature.id === this.backService.countryListing[i].alpha3code)
       {
         this.backService.aboveListing = this.backService.countryListing[i];
+        this.backService.current_country = this.backService.countryListing[i].alpha3code;
+        
+        console.log("THe itemNo for this country is", i)
       }
     }
+   // this.backService.selectedMonth="All";
+   this.backService.selectedMonth={
+    "total_profit":"All",
+    "active_users":"All",
+    "new_orders":"All",
+    "open_complaints":"All"  
+    };
+   // this.backService.changeCurrency('All','total_profit');
+   this.backService.resetHeadersFunc();
     console.log("this is the above listing variable", this.backService.aboveListing);
     if (featureLayer !== this.selectedCountry) {
       this.resetHighlight(this.selectedCountry);
