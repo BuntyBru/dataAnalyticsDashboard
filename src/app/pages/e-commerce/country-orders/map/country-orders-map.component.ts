@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-
 import * as L from 'leaflet';
-
 import { CountryOrdersMapService } from './country-orders-map.service';
 import { NbThemeService } from '@nebular/theme';
 import { combineLatest } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-
 import {DataService} from '../../data.service';
 
 
@@ -126,8 +123,9 @@ export class CountryOrdersMapComponent implements OnDestroy {
 
   //function which finds out the country clicked on map
   private selectFeature(featureLayer) {
-    console.log(featureLayer);
-    console.log("this is the selected country", featureLayer.feature.id);
+
+    //console.log(featureLayer);
+    //console.log("this is the selected country", featureLayer.feature.id);
     this.backService.resettingBarGraph();
     this.backService.monthChosenForTopFilter='All';
     for(let i=0;i<this.backService.countryListing.length;i++)
@@ -140,14 +138,12 @@ export class CountryOrdersMapComponent implements OnDestroy {
         console.log("THe itemNo for this country is", i)
       }
     }
-   // this.backService.selectedMonth="All";
    this.backService.selectedMonth={
     "total_profit":"All",
     "active_users":"All",
     "new_orders":"All",
     "open_complaints":"All"  
     };
-   // this.backService.changeCurrency('All','total_profit');
    this.backService.resetHeadersFunc();
     console.log("this is the above listing variable", this.backService.aboveListing);
     if (featureLayer !== this.selectedCountry) {

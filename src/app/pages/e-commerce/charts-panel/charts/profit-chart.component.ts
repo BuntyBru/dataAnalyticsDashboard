@@ -1,9 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
-
-import { ProfitChart } from '../../../../@core/data/profit-chart';
-import { LayoutService } from '../../../../@core/utils/layout.service';
 import {DataService} from '../../data.service'
 
 @Component({
@@ -23,13 +20,8 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
   echartsIntance: any;
   options: any = {};
 
-  constructor(private theme: NbThemeService,
-              private layoutService: LayoutService, private backService:DataService) {
-    this.layoutService.onChangeLayoutSize()
-      .pipe(
-        takeWhile(() => this.alive),
-      )
-      .subscribe(() => this.resizeChart());
+  constructor(private theme: NbThemeService, private backService:DataService) {
+   
   }
 
   ngOnChanges(): void {
@@ -69,7 +61,6 @@ console.log("ProfitChartData for first round", this.profitChartData);
       xAxis: [
         {
           type: 'category',
-         // data: this.profitChartData.chartLabel,
          data:this.backService.chartData.chartLabel,
           axisTick: {
             alignWithLabel: true,
@@ -119,7 +110,6 @@ console.log("ProfitChartData for first round", this.profitChartData);
               }]),
             },
           },
-      //    data: this.profitChartData.data,
       data:this.backService.chartData.data
         },
       
@@ -128,10 +118,8 @@ console.log("ProfitChartData for first round", this.profitChartData);
 
 
   //Function for updating the chart
-  updateProfitChartOptions(profitChartData: ProfitChart) {
+  updateProfitChartOptions(profitChartData) {
     const options = this.options;
-   // const series = this.getNewSeries(options.series, profitChartData.data);
-
    console.log("the month chosen for display is ",this.backService.monthChosenForGraph);
    
    this.profitChartData = this.backService.barGraphData[this.backService.monthChosenForGraph];
@@ -141,7 +129,6 @@ console.log("ProfitChartData for first round", this.profitChartData);
 
     this.echartsIntance.setOption({
       xAxis: {
-     //   data: this.profitChartData.chartLabel,
      data:this.backService.chartData.chartLabel,
       },
       series: 
@@ -149,7 +136,6 @@ console.log("ProfitChartData for first round", this.profitChartData);
           name: 'All orders',
           type: 'bar',
           barWidth: '60%',
-          //data: this.profitChartData.data,
           data:this.backService.chartData.data,
         },
       
@@ -157,69 +143,11 @@ console.log("ProfitChartData for first round", this.profitChartData);
     });
   }
 
-  getNewSeries(series, data: number[][]) {
-    return series.map((line, index) => {
-      return {
-        ...line,
-        data: data[index],
-      };
-    });
-  }
-
   onChartInit(echarts) {
     this.echartsIntance = echarts;
-  }
-
-  resizeChart() {
-    if (this.echartsIntance) {
-      // Fix recalculation chart size
-      // TODO: investigate more deeply
-      setTimeout(() => {
-        this.echartsIntance.resize();
-      }, 0);
-    }
   }
 
   ngOnDestroy(): void {
     this.alive = false;
   }
 }
-
-
-
-
- /*{
-          name: 'Canceled',
-          type: 'bar',
-          barGap: 0,
-          barWidth: '20%',
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: eTheme.firstLineGradFrom,
-              }, {
-                offset: 1,
-                color: eTheme.firstLineGradTo,
-              }]),
-            },
-          },
-          data: this.profitChartData.data[0],
-        },
-        {
-          name: 'Payment',
-          type: 'bar',
-          barWidth: '20%',
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                offset: 0,
-                color: eTheme.secondLineGradFrom,
-              }, {
-                offset: 1,
-                color: eTheme.secondLineGradTo,
-              }]),
-            },
-          },
-          data: this.profitChartData.data[1],
-        },*/
