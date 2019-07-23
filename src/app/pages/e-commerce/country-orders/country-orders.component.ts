@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbMediaBreakpoint, NbMediaBreakpointsService, NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
-import { CountryOrderData } from '../../../@core/data/country-order';
+//import { CountryOrderData } from '../../../@core/data/country-order';
 import { DataService} from '../data.service';
 
 @Component({
@@ -11,14 +11,8 @@ import { DataService} from '../data.service';
     <nb-card [size]="breakpoint.width >= breakpoints.md ? 'small' : 'giant'">
       <nb-card-header>Sales Revenue By Country ({{backService.current_countryName}}) </nb-card-header>
       <nb-card-body>
-        <ngx-country-orders-map (select)="selectCountryById($event)"
-                                countryId="USA">
+        <ngx-country-orders-map countryId="USA">
         </ngx-country-orders-map>
-       <!--<ngx-country-orders-chart [countryName]="countryName"
-                                  [data]="countryData"
-                                  [labels]="countriesCategories"
-                                  maxValue="20">
-        </ngx-country-orders-chart>-->
       </nb-card-body>
     </nb-card>
   `,
@@ -34,29 +28,12 @@ export class CountryOrdersComponent implements OnDestroy {
   breakpoints: any;
 
   constructor(private themeService: NbThemeService,
-              private breakpointService: NbMediaBreakpointsService,
-              private countryOrderService: CountryOrderData,
-              private backService:DataService) {
+              private breakpointService: NbMediaBreakpointsService,private backService:DataService) {
     this.breakpoints = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(takeWhile(() => this.alive))
       .subscribe(([oldValue, newValue]) => {
         this.breakpoint = newValue;
-      });
-    this.countryOrderService.getCountriesCategories()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((countriesCategories) => {
-        this.countriesCategories = countriesCategories;
-      });
-  }
-
-  selectCountryById(countryName: string) {
-    this.countryName = countryName;
-
-    this.countryOrderService.getCountriesCategoriesData(countryName)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((countryData) => {
-        this.countryData = countryData;
       });
   }
 

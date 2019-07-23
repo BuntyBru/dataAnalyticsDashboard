@@ -7,9 +7,5 @@ import { Component,Input } from '@angular/core';
 })
 export class EarningCardComponent {
 @Input() name:any;
-  flipped = false;
 
-  toggleView() {
-    this.flipped = !this.flipped;
-  }
 }
