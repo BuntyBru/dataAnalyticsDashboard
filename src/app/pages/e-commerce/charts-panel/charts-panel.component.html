@@ -1,4 +1,4 @@
-<nb-card size="large">
+<nb-card size="{{backService.graphHeight}}">
   <!--<nb-tabset fullWidth (changeTab)="changeTab($event)">-->
     <!--<nb-tab tabTitle="Orders">
       <div class="chart-container">
@@ -10,13 +10,35 @@
       </div>
     </nb-tab>-->
     <!--<nb-tab tabTitle="Profit" [lazyLoad]="true">-->
-        <nb-card-header>Production Graph Overall</nb-card-header>
+        <nb-card-header>
+          <div class="row">
+            <div class="f1">
+                Total Units Sold
+            </div>
+
+
+            <div class="f2">
+                
+                <ngx-chart-panel-header  class="panelHeader" [type]="this.backService.monthChosenForGraph"
+                (periodChange)="setPeriodAndGetChartData($event)"> 
+    </ngx-chart-panel-header> 
+
+   
+              </div>
+
+              <div class="f3" >
+                  <nb-icon  [hidden]="!this.backService.mapHide" pack="ion" class="ion-arrow-resize ng-star-inserted"  (click)="onResizeElement()"></nb-icon>
+                  <nb-icon [hidden]="this.backService.mapHide" pack="ion"  class="ion-reply ng-star-inserted" (click)="onNormalsizeElement()"></nb-icon>
+                </div>
+
+          </div>
+         
+            
+        </nb-card-header>
       <div class="chart-container">
     <!--<ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>-->
-        <ngx-chart-panel-header [type]="period"
-                                (periodChange)="setPeriodAndGetChartData($event)">
-        </ngx-chart-panel-header>
-        <ngx-profit-chart #profitChart [profitChartData]="profitChartData"></ngx-profit-chart>
+       
+        <ngx-profit-chart #profitChart [profitChartData]="backService.chartData"></ngx-profit-chart>
       </div>
     <!--</nb-tab>-->
 

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-
+import { NbWindowService } from '@nebular/theme';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor() { }
+  constructor(private windowService: NbWindowService) { }
   current_country:string='USA';
   current_countryName:string='United States';
   aboveListing:any=[];
@@ -16,8 +16,26 @@ export class DataService {
    "open_complaints":"All"  
    };
 
+   identities=["total_profit_per","active_users_per","new_orders_per",
+   "open_complaints_per","total_profit","active_users","new_orders","open_complaints",];
+
+   footerSelector:any=['All','Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
    //variable for the bargraph
    profitChartData:any={};
+
+   //Variables for Resizing
+   elem:any;
+   cardsClass:string='col-xxl-5';
+   graphClass:string='col-md-6';
+   mapClass:string='col-md-6';
+   summaryClass:string='col-xxl-7';
+   rowClass:string='row';
+   cardsClass2:string='col-md-3';
+   earningCard:string='chart-info';
+   mapHide=true;
+   graphParent='col-md-6';
+   graphHeight='small';
+
   countryListingMain=[
     {
        "name":"Afghanistan",
@@ -6703,6 +6721,8 @@ export class DataService {
 };
 
 monthChosenForGraph:string="All";
+monthChosenForTopFilter="All";
+chartData:any;
 
 //Data for the bar graph
 barGraphData={
@@ -6809,6 +6829,8 @@ barGraphData={
    resettingBarGraph()
    {
       console.log("Resetting the bar graph");
+      this.monthChosenForGraph = "All";
+      this.chartData=this.barGraphData['All'];
    }
    
 

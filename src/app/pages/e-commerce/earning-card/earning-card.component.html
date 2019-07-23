@@ -1,15 +1,15 @@
 <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
   <nb-card-front>
-    <nb-card size="tiny">
-        <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+    <nb-card>
+      <!--  <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>-->
       <ngx-earning-card-front [name]="name"></ngx-earning-card-front>
      
     </nb-card>
   </nb-card-front>
-  <nb-card-back>
-    <nb-card size="tiny">
+  <!--<nb-card-back>
+    <nb-card>
       <ngx-earning-card-back></ngx-earning-card-back>
-      <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+    <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
     </nb-card>
-  </nb-card-back>
+  </nb-card-back>-->
 </nb-flip-card>

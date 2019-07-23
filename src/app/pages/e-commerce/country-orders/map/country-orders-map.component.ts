@@ -128,7 +128,8 @@ export class CountryOrdersMapComponent implements OnDestroy {
   private selectFeature(featureLayer) {
     console.log(featureLayer);
     console.log("this is the selected country", featureLayer.feature.id);
-
+    this.backService.resettingBarGraph();
+    this.backService.monthChosenForTopFilter='All';
     for(let i=0;i<this.backService.countryListing.length;i++)
     {
       if(featureLayer.feature.id === this.backService.countryListing[i].alpha3code)

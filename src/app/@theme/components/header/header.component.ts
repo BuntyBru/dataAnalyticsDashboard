@@ -5,6 +5,7 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {DataService} from '../../../pages/e-commerce/data.service';
 
 @Component({
   selector: 'ngx-header',
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
 
   currentTheme = 'default';
-
+  type:any='All';
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
   constructor(private sidebarService: NbSidebarService,
@@ -45,8 +46,51 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private backService:DataService) {
+  }  
+  
+  changePeriod(month)
+  {
+    this.backService.monthChosenForTopFilter=month;
+    console.log("this is the month selected in the main selector", month);
+    //change the month with respect to the selector in the header cards
+    console.log("this is the current country", this.backService.current_country);
+    this.backService.selectedMonth={
+      "total_profit":month,
+      "active_users":month,
+      "new_orders":month,
+      "open_complaints":month  
+      };
+
+
+
+      if(month === 'All')
+      {
+        for(let i=0;i<this.backService.countryListingMain.length;i++)
+        {
+          if(this.backService.current_country == this.backService.countryListingMain[i].alpha3code)
+          {   
+            for(let j=0;j<this.backService.identities.length;j++)
+            {
+              this.backService.aboveListing[this.backService.identities[j]]=this.backService.countryListingMain[i][this.backService.identities[j]];
+            }
+          }
+        }
+  
+      }
+      else
+      {
+        for(let j=0;j<this.backService.identities.length;j++)
+        {
+          this.backService.aboveListing[this.backService.identities[j]] = this.backService.monthly_data['any_key'][month][this.backService.identities[j]];
+        }
+      }
+    //change the month with respect to the selector in the graph
+    this.backService.monthChosenForGraph = month;
+    this.backService.chartData = this.backService.barGraphData[month];
   }
+
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;

@@ -1,27 +1,37 @@
 <div class="row">
-  <div class="col-xxl-5">
+  <div class="col-xxl-5" [hidden]="!this.backService.mapHide" >
     <div class="row">
-      <!--<div class="col-md-6">
-        <ngx-profit-card></ngx-profit-card>
-      </div>-->
       <div *ngFor ="let item of totalEntries" class="col-md-3">
         <ngx-earning-card [name] = "item"></ngx-earning-card>
       </div>
     </div>
-
-   <!-- <ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
   </div>
-
   <div class="col-xxl-7">
     <div class="row">
-        <div class="col-md-6">
-            <ngx-ecommerce-charts></ngx-ecommerce-charts>
-      
+        <div class="{{backService.graphParent}}">
+           
+            <ngx-ecommerce-charts></ngx-ecommerce-charts>      
         </div>
         <div class="col-md-6">
-            <ngx-country-orders></ngx-country-orders>
+            <ngx-country-orders [hidden]="!this.backService.mapHide" ></ngx-country-orders>
         </div>
     </div>
+  </div>
+
+  <div class="col-xxl-7" [hidden]="!this.backService.mapHide" >
+      <nb-card size="tiny">
+          <nb-card-header>Summary
+              
+          </nb-card-header>
+          <nb-card-body>
+           In {{backService.current_countryName}}, the company has reaped total profits of
+            {{ backService.aboveListing['total_profit'] | ngxNumberWithCommas }} this year which is a increase of {{ backService.aboveListing['total_profit_per']}}% than the previous year, 
+            There were {{ backService.aboveListing['active_users']}} entities
+           who bought our product actively. There has been {{backService.aboveListing['new_orders_per']}}% increase in new orders and
+           {{backService.aboveListing['open_complaints_per']}}% demise in complaints related to our products
+         
+          </nb-card-body>
+        </nb-card>  
   </div>
 </div>
 

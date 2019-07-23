@@ -112,5 +112,6 @@ import { ChartsComponent } from './charts/charts.component';
   providers: [
     CountryOrdersMapService,
   ],
+  
 })
 export class ECommerceModule { }

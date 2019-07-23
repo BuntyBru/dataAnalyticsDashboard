@@ -62,9 +62,30 @@
     }
   }
 
-  @include media-breakpoint-down(is) {
+  /*@include media-breakpoint-down(is) {
     nb-select {
       display: none;
     }
-  }
+  }*/
+}
+
+.f1 , .f2
+{
+  flex: 1;
+}
+.headerMain
+{
+  width: 100% !important;
+}
+.headerSelect
+{
+  display: block;
+  float: right;
+}
+.headingMain
+{
+  font-weight: 600;
+  color: white;
+  padding-top: 1rem;
+  padding-left: 0.2rem;
 }

@@ -43,7 +43,7 @@ export class ProfitChartComponent implements AfterViewInit, OnDestroy, OnChanges
       .pipe(takeWhile(() => this.alive))
       .subscribe(config => {
         const eTheme: any = config.variables.profit;
-console.log("themes in the bar graph");
+console.log("ProfitChartData for first round", this.profitChartData);
         this.setOptions(eTheme);
       });
   }
@@ -69,7 +69,8 @@ console.log("themes in the bar graph");
       xAxis: [
         {
           type: 'category',
-          data: this.profitChartData.chartLabel,
+         // data: this.profitChartData.chartLabel,
+         data:this.backService.chartData.chartLabel,
           axisTick: {
             alignWithLabel: true,
           },
@@ -118,7 +119,8 @@ console.log("themes in the bar graph");
               }]),
             },
           },
-          data: this.profitChartData.data,
+      //    data: this.profitChartData.data,
+      data:this.backService.chartData.data
         },
       
     };
@@ -131,27 +133,24 @@ console.log("themes in the bar graph");
    // const series = this.getNewSeries(options.series, profitChartData.data);
 
    console.log("the month chosen for display is ",this.backService.monthChosenForGraph);
+   
    this.profitChartData = this.backService.barGraphData[this.backService.monthChosenForGraph];
+   this.backService.chartData= this.backService.barGraphData[this.backService.monthChosenForGraph];
 
-   for(let k=0;k<this.profitChartData.data.length;k++)
-   {
-     if(this.profitChartData.data[k] < 0)
-     {
-       console.log("negativve number");
-       
-     }
-   }
+  
 
     this.echartsIntance.setOption({
       xAxis: {
-        data: this.profitChartData.chartLabel,
+     //   data: this.profitChartData.chartLabel,
+     data:this.backService.chartData.chartLabel,
       },
       series: 
         {
           name: 'All orders',
           type: 'bar',
           barWidth: '60%',
-          data: this.profitChartData.data,
+          //data: this.profitChartData.data,
+          data:this.backService.chartData.data,
         },
       
       

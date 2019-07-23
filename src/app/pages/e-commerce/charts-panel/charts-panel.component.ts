@@ -7,11 +7,15 @@ import { OrdersChart } from '../../../@core/data/orders-chart';
 import { ProfitChart } from '../../../@core/data/profit-chart';
 import { OrderProfitChartSummary, OrdersProfitChartData } from '../../../@core/data/orders-profit-chart';
 import {DataService} from '../data.service';
+import { NbWindowService } from '@nebular/theme';
+import {ChartPanelHeaderComponent} from './chart-panel-header/chart-panel-header.component'
 import { from } from 'rxjs';
+import { importType } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'ngx-ecommerce-charts',
   styleUrls: ['./charts-panel.component.scss'],
   templateUrl: './charts-panel.component.html',
+  
 })
 export class ECommerceChartsPanelComponent implements OnDestroy {
 
@@ -25,7 +29,7 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
   @ViewChild('ordersChart', { static: true }) ordersChart: OrdersChartComponent;
   @ViewChild('profitChart', { static: true }) profitChart: ProfitChartComponent;
 
-  constructor(private ordersProfitChartService: OrdersProfitChartData, private backService: DataService) {
+  constructor(private ordersProfitChartService: OrdersProfitChartData,private windowService: NbWindowService ,private backService: DataService) {
     this.ordersProfitChartService.getOrderProfitChartSummary()
       .pipe(takeWhile(() => this.alive))
       .subscribe((summary) => {
@@ -69,10 +73,31 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
       .subscribe(profitChartData => {
         this.profitChartData = profitChartData;
       });*/
-
-      this.profitChartData = this.backService.barGraphData[period];
+      console.log("First Data Entry for the bar graph");
+     // this.profitChartData = this.backService.barGraphData[period];
+      this.backService.chartData = this.backService.barGraphData[period];
 
   }
+ 
+  onResizeElement()
+  {
+    console.log("Resizing the element was clicked");
+    
+    this.backService.mapHide=false;
+    this.backService.graphParent='col-md-12';
+    this.backService.graphHeight='large';
+
+  }
+
+  onNormalsizeElement()
+  {
+    console.log("Normal Sizing the element was clicked");
+    this.backService.mapHide=true;
+    this.backService.graphParent='col-md-6';
+    this.backService.graphHeight='small';
+  }
+
+ 
 
   ngOnDestroy() {
     this.alive = false;

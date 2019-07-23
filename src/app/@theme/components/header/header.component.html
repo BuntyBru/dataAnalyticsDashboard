@@ -1,11 +1,20 @@
-<div class="header-container">
-  <div class="logo-container">
-   
-    <p class="logo">Enterprise Shiny Dashboard</p>
+<div class="header-container headerMain">
+  <div class="logo-container f1">
+   <img src="../../../../assets/images/icon1.svg">
+    <p class="headingMain">Analytics Dashboard</p>
   </div>
   <!--<nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>-->
+<div class="f2">
+    <nb-select class="period-select headerSelect" [selected]="backService.monthChosenForTopFilter" (selectedChange)="changePeriod($event)">
+        <nb-option *ngFor="let period of backService.footerSelector" [value]="period">
+          {{ period }}
+        </nb-option>
+      </nb-select>
+
+</div>
+ 
 </div>
 
 

@@ -8,7 +8,7 @@ import { DataService} from '../data.service';
   selector: 'ngx-country-orders',
   styleUrls: ['./country-orders.component.scss'],
   template: `
-    <nb-card [size]="breakpoint.width >= breakpoints.md ? 'large' : 'giant'">
+    <nb-card [size]="breakpoint.width >= breakpoints.md ? 'small' : 'giant'">
       <nb-card-header>Sales Revenue By Country ({{backService.current_countryName}}) </nb-card-header>
       <nb-card-body>
         <ngx-country-orders-map (select)="selectCountryById($event)"
