@@ -15,7 +15,7 @@ export interface PieChart {
 }
 
 export abstract class EarningData {
-  abstract getEarningLiveUpdateCardData(currency: string): Observable<any[]>;
-  abstract getEarningCardData(currency: string): Observable<LiveUpdateChart>;
-  abstract getEarningPieChartData(): Observable<PieChart[]>;
+//  abstract getEarningLiveUpdateCardData(currency: string): Observable<any[]>;
+//  abstract getEarningCardData(currency: string): Observable<LiveUpdateChart>;
+ // abstract getEarningPieChartData(): Observable<PieChart[]>;
 }

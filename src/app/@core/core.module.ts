@@ -26,7 +26,7 @@ import { TemperatureHumidityData } from './data/temperature-humidity';
 import { SolarData } from './data/solar';
 import { TrafficChartData } from './data/traffic-chart';
 import { StatsBarData } from './data/stats-bar';
-import { CountryOrderData } from './data/country-order';
+//import { CountryOrderData } from './data/country-order';
 import { StatsProgressBarData } from './data/stats-progress-bar';
 import { VisitorsAnalyticsData } from './data/visitors-analytics';
 import { SecurityCamerasData } from './data/security-cameras';
@@ -52,24 +52,6 @@ import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
 
-const socialLinks = [
-  {
-    url: 'https://github.com/akveo/nebular',
-    target: '_blank',
-    icon: 'github',
-  },
-  {
-    url: 'https://www.facebook.com/akveo/',
-    target: '_blank',
-    icon: 'facebook',
-  },
-  {
-    url: 'https://twitter.com/akveo_inc',
-    target: '_blank',
-    icon: 'twitter',
-  },
-];
-
 const DATA_SERVICES = [
   { provide: UserData, useClass: UserService },
   { provide: ElectricityData, useClass: ElectricityService },
@@ -86,7 +68,7 @@ const DATA_SERVICES = [
   { provide: SolarData, useClass: SolarService },
   { provide: TrafficChartData, useClass: TrafficChartService },
   { provide: StatsBarData, useClass: StatsBarService },
-  { provide: CountryOrderData, useClass: CountryOrderService },
+//  { provide: CountryOrderData, useClass: CountryOrderService },
   { provide: StatsProgressBarData, useClass: StatsProgressBarService },
   { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
   { provide: SecurityCamerasData, useClass: SecurityCamerasService },
@@ -109,15 +91,7 @@ export const NB_CORE_PROVIDERS = [
         name: 'email',
         delay: 3000,
       }),
-    ],
-    forms: {
-      login: {
-        socialLinks: socialLinks,
-      },
-      register: {
-        socialLinks: socialLinks,
-      },
-    },
+    ]
   }).providers,
 
   NbSecurityModule.forRoot({
