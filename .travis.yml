@@ -33,3 +33,4 @@ script:
 
 git:
   depth: 1
+  
